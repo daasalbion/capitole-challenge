@@ -14,11 +14,11 @@ public record PriceDTO(
         Integer brandId,
 
         @Schema(description = "Id of the priceList.",
-                example = "2")
+                example = "1")
         Integer priceList,
 
         @Schema(description = "Start date of the priceList.",
-                example = "2020-06-14-15.00.00")
+                example = "2020-06-14-00.00.00")
         LocalDateTime startDate,
 
         @Schema(description = "End date of the priceList.",
@@ -26,7 +26,7 @@ public record PriceDTO(
         LocalDateTime endDate,
 
         @Schema(description = "Final sale price",
-                example = "25.45")
+                example = "35.5")
         Double price,
 
         @Schema(description = "Currency ISO code",

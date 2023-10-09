@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,7 +23,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(DomainException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(DomainException ex) {
+    public ResponseEntity<ErrorResponse> handleDomainException(DomainException ex) {
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 

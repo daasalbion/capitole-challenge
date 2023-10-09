@@ -20,9 +20,9 @@ public interface SpringDataH2PriceRepository extends JpaRepository<PriceEntity, 
             @Param("date") LocalDateTime date);
 
     /*
-    select p1_0.id,p1_0.brand_id,p1_0.curr,p1_0.end_date,p1_0.price,p1_0.price_list,p1_0.priority,p1_0.product_id,p1_0.start_date from prices p1_0
-    where p1_0.brand_id=? and p1_0.product_id=? and p1_0.start_date<=? and p1_0.end_date>=?
+    select p1_0.id,p1_0.brand_id,p1_0.curr,p1_0.end_date,p1_0.price,p1_0.price_list,p1_0.priority,p1_0.product_id,p1_0.start_date
+    from prices p1_0 where p1_0.brand_id=? and p1_0.product_id=? and p1_0.start_date<=? and p1_0.end_date>=? order by p1_0.priority desc
      */
-    List<PriceEntity> getPriceEntitiesByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(Integer brandId,
+    List<PriceEntity> getPriceEntitiesByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(Integer brandId,
             Integer productId, LocalDateTime startDate, LocalDateTime endDate);
 }

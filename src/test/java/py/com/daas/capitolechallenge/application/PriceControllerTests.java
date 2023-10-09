@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import py.com.daas.capitolechallenge.application.controllers.PriceController;
-import py.com.daas.capitolechallenge.domain.dtos.PriceDTO;
-import py.com.daas.capitolechallenge.factories.PriceTestFactory;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +26,7 @@ class PriceControllerTests {
     @Autowired
     private PriceController priceController;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
 
@@ -126,20 +125,24 @@ class PriceControllerTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_CURRENCY).value(CURRENCY_VALUE));
     }
 
-    private void doTest(String requestedDate, Integer targetPriceList) throws Exception {
-        PriceDTO expectedPriceDTO = PriceTestFactory.getPriceDTO(targetPriceList);
+    @Test
+    void testDateStringFormatNotAccepted() throws Exception {
+        String requestedDate = "2020-06-16-21.00-00";
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get(REST_ENDPOINT, SEARCHED_BRAND_ID, SEARCHED_PRODUCT_ID, requestedDate)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_PRODUCT_ID).value(expectedPriceDTO.productId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_BRAND_ID).value(expectedPriceDTO.brandId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_PRICE_LIST).value(expectedPriceDTO.priceList()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_START_DATE).value(expectedPriceDTO.startDate()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_END_DATE).value(expectedPriceDTO.endDate()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_PRICE).value(expectedPriceDTO.price()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$." + JSONKEY_CURRENCY).value(expectedPriceDTO.currency()));
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void testPricePvpNotFound() throws Exception {
+        String requestedDate = "2020-06-16-21.00.00";
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get(REST_ENDPOINT, 3, SEARCHED_PRODUCT_ID, requestedDate)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
 }

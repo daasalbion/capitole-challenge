@@ -1,8 +1,6 @@
 package py.com.daas.capitolechallenge.infrastructure.repositories;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +23,14 @@ public class SpringDataH2PriceRepositoryImpl implements PriceRepository {
 
     @Override
     public Optional<PriceDTO> getPvp(Integer brandId, Integer productId, LocalDateTime date) {
-        return priceRepository.getPvp(brandId, productId, date)
-                .map(price -> new PriceDTO(price.getProductId(),
-                price.getBrandId(), price.getPriceList(), price.getStartDate(),
-                price.getEndDate(), price.getPrice(), price.getCurr()));
+        var prices = priceRepository.getPriceEntitiesByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(brandId,
+                productId, date, date);
+        return prices.stream().findFirst().map(this::toPriceDTO);
     }
 
-    public Optional<PriceDTO> getPvp2(Integer brandId, Integer productId, LocalDateTime date) {
-        var prices = priceRepository.getPriceEntitiesByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(brandId,
-                productId, date, date);
-        prices.sort(Comparator.comparing(PriceEntity::getPriority));
-        return prices.stream().findFirst().map(price -> new PriceDTO(price.getProductId(),
+    private PriceDTO toPriceDTO(PriceEntity price) {
+        return new PriceDTO(price.getProductId(),
                 price.getBrandId(), price.getPriceList(), price.getStartDate(),
-                price.getEndDate(), price.getPrice(), price.getCurr()));
+                price.getEndDate(), price.getPrice(), price.getCurr());
     }
 }
