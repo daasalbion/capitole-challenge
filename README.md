@@ -29,4 +29,4 @@ API RESTful para obtener el precio pvp de un producto, brand y fecha determinada
 ```
 
 ## Swagger
-- http://localhost:9000/swagger-ui/index.html
+- http://localhost:8080/swagger-ui/index.html

@@ -29,8 +29,7 @@ public class SpringDataH2PriceRepositoryImpl implements PriceRepository {
     }
 
     private PriceDTO toPriceDTO(PriceEntity price) {
-        return new PriceDTO(price.getProductId(),
-                price.getBrandId(), price.getPriceList(), price.getStartDate(),
+        return new PriceDTO(price.getProductId(), price.getBrandId(), price.getPriceList(), price.getStartDate(),
                 price.getEndDate(), price.getPrice(), price.getCurr());
     }
 }

@@ -1,7 +1,6 @@
 package py.com.daas.capitolechallenge.application.controllers;
 
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +29,7 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponse> defaultHandler(Exception ex) {
-        return new ResponseEntity<>(buildErrorResponse(ex), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    private ErrorResponse buildErrorResponse(Exception ex) {
-        var details = Optional.ofNullable(ex.getCause())
-                .stream()
-                .map(Throwable::getMessage)
-                .toList();
-        return new ErrorResponse(ex.getMessage(), details);
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

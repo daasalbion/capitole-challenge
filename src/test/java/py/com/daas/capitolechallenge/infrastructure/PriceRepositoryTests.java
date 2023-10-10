@@ -6,7 +6,8 @@ import static py.com.daas.capitolechallenge.factories.PriceTestFactory.SEARCHED_
 
 import java.time.LocalDateTime;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -30,47 +31,15 @@ class PriceRepositoryTests {
         this.priceRepository = priceRepository;
     }
 
-    @Test
-    void test1() {
-        String searchedDate = "2020-06-14T10:00:00";
-        Integer targetPriceList = 1;
-
-        doTest(searchedDate, targetPriceList);
-    }
-
-    @Test
-    void test2() {
-        String searchedDate = "2020-06-14T16:00:00";
-        Integer targetPriceList = 2;
-
-        doTest(searchedDate, targetPriceList);
-    }
-
-    @Test
-    void test3() {
-        String searchedDate = "2020-06-14T21:00:00";
-        Integer targetPriceList = 1;
-
-        doTest(searchedDate, targetPriceList);
-    }
-
-    @Test
-    void test4() {
-        String searchedDate = "2020-06-15T10:00:00";
-        Integer targetPriceList = 3;
-
-        doTest(searchedDate, targetPriceList);
-    }
-
-    @Test
-    void test5() {
-        String searchedDate = "2020-06-16T21:00:00";
-        Integer targetPriceList = 4;
-
-        doTest(searchedDate, targetPriceList);
-    }
-
-    private void doTest(String searchedDate, Integer targetPriceList) {
+    @ParameterizedTest
+    @CsvSource({
+        "2020-06-14T10:00:00, 1",
+        "2020-06-14T16:00:00, 2",
+        "2020-06-14T21:00:00, 1",
+        "2020-06-15T10:00:00, 3",
+        "2020-06-16T21:00:00, 4",
+    })
+    void doTest(String searchedDate, Integer targetPriceList) {
         LocalDateTime ldtSearchedDate = PriceTestFactory.string2LocalDatetime(searchedDate);
         PriceDTO expectedPriceDTO = PriceTestFactory.getPriceDTO(targetPriceList);
 
