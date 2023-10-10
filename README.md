@@ -8,6 +8,9 @@ API RESTful para obtener el precio pvp de un producto, brand y fecha determinada
 - Spring Boot 3.1.4
 - Base de Datos H2
 
+## Arquitectura Hexagonal
+![Architecture](src/main/resources/static/DDD-Layers.webp)
+
 ## Base de Datos
 - Inicializada automáticamente via Flyway.
 - Credenciales:
