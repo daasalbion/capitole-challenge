@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import py.com.daas.capitolechallenge.domain.dtos.PriceDTO;
+import py.com.daas.capitolechallenge.infrastructure.entities.PriceEntity;
 
 public class PriceTestFactory {
 
@@ -54,6 +55,20 @@ public class PriceTestFactory {
                     string2LocalDatetime(END_DATE_PRICELIST4), PRICE_PRICELIST4, CURRENCY_VALUE);
             default -> throw new IllegalArgumentException("targetPriceList is not present");
         };
+    }
+
+    public static PriceEntity getPriceEntity(Integer targetPriceList) {
+        PriceDTO priceDTO = getPriceDTO(targetPriceList);
+        PriceEntity priceEntity = new PriceEntity();
+        priceEntity.setProductId(priceDTO.productId());
+        priceEntity.setBrandId(priceDTO.brandId());
+        priceEntity.setPriceList(priceDTO.priceList());
+        priceEntity.setStartDate(priceDTO.startDate());
+        priceEntity.setEndDate(priceDTO.endDate());
+        priceEntity.setPrice(priceDTO.price());
+        priceEntity.setCurr(priceDTO.currency());
+
+        return priceEntity;
     }
 
     public static LocalDateTime string2LocalDatetime(String dateStr, DateTimeFormatter formatter) {

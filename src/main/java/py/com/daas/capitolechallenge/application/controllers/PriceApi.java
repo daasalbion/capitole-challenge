@@ -16,8 +16,8 @@ import py.com.daas.capitolechallenge.domain.dtos.PriceDTO;
 public interface PriceApi {
 
     @Operation(
-            summary = "Find Pvp for a product using the brandId, productId and date",
-            description = "Find Pvp for a product using the brandId, productId and date",
+            summary = "Get Pvp for a product using the brandId, productId and date",
+            description = "Get Pvp for a product using the brandId, productId and date",
             tags = {"pvp"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation",
