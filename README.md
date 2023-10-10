@@ -15,7 +15,7 @@ API RESTful para obtener el precio pvp de un producto, brand y fecha determinada
     - user: admin
     - password: admin
 - API h2
-    - http://localhost:8080/h2-console
+    - http://localhost:9000/h2-console
     - ```select * from prices;```
 
 ## Ejecutar la aplicación
@@ -29,4 +29,4 @@ API RESTful para obtener el precio pvp de un producto, brand y fecha determinada
 ```
 
 ## Swagger
-- http://localhost:8080/swagger-ui/index.html
+- http://localhost:9000/swagger-ui/index.html
