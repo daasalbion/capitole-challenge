@@ -1,3 +1,5 @@
+![Coverage](.github/badges/jacoco.svg)
+
 # Challenge
 API RESTful para obtener el precio pvp de un producto, brand y fecha determinada
 
